@@ -9,9 +9,9 @@ class SecondPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Segunda Tela')),
       body: Center(
         child: ElevatedButton(
-          child: const Text('Voltar'),
-          onPressed: () {
-            Navigator.pop(context);
+          child: const Text('Voltar'), // Texto exibido no botão
+          onPressed: () { // Função chamada quando o botão é pressionado
+            Navigator.pop(context); // Volta para a tela anterior na pilha de navegação
           },
         ),
       ),
