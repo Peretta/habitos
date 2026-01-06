@@ -1,17 +1,72 @@
-import 'package:flutter/material.dart';  // contém os widgets básicos seguindo o estilo Material Design (botões, textos, layouts etc.
-import 'pages/home_page.dart';
+import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp()); // runApp() é a função que inicia a aplicação Flutter, recebendo um widget raiz como argumento
-}
+class MyAppBar extends StatelessWidget {
+  const MyAppBar({required this.title, super.key});
 
-class MyApp extends StatelessWidget { // StatelessWidget é um widget sem estado mutável – ou seja, sua interface não depende de variáveis que mudam ao longo do tempo
-  const MyApp({super.key});
+  // Fields in a Widget subclass are always marked "final".
+
+  final Widget title;
 
   @override
-  Widget build(BuildContext context) { // Construtor da classe HomePage, que aceita uma chave opcional
-    return const MaterialApp( // o método obrigatório build(BuildContext). Todo widget no Flutter define sua interface no build()
-      home: HomePage(), // Define a HomePage como a tela inicial do aplicativo
+  Widget build(BuildContext context) {
+    return Container(
+      height: 56, // in logical pixels
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(color: Colors.blue[500]),
+      // Row is a horizontal, linear layout.
+      child: Row(
+        children: [
+          const IconButton(
+            icon: Icon(Icons.menu),
+            tooltip: 'Navigation menu',
+            onPressed: null, // null disables the button
+          ),
+          // Expanded expands its child
+          // to fill the available space.
+          Expanded(child: title),
+          const IconButton(
+            icon: Icon(Icons.search),
+            tooltip: 'Search',
+            onPressed: null,
+          ),
+        ],
+      ),
     );
   }
+}
+
+class MyScaffold extends StatelessWidget {
+  const MyScaffold({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Material is a conceptual piece
+    // of paper on which the UI appears.
+    return Material(
+      // Column is a vertical, linear layout.
+      child: Column(
+        children: [
+          MyAppBar(
+            title: Text(
+              'Example title',
+              style:
+                  Theme.of(context) //
+                      .primaryTextTheme
+                      .titleLarge,
+            ),
+          ),
+          const Expanded(child: Center(child: Text('Hello, world!'))),
+        ],
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(
+    const MaterialApp(
+      title: 'My app', // used by the OS task switcher
+      home: SafeArea(child: MyScaffold()),
+    ),
+  );
 }
